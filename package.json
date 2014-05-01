@@ -1,8 +1,8 @@
 {
     "name": "Vatican",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "dependencies": {
-        "winston": "*",
+        "winston": "0.7.3",
         "lodash": "2.4.1"
     }
 }
