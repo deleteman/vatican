@@ -58,7 +58,7 @@ Hndlr.prototype.list = function(req, res) {
 //The annotation can be commented out, so your text editor won't complain
 //@endpoint (url: /books/:id method: get)
 Hndlr.prototype.getData = function(req, res) {
-    res.setHeader("Content-type", "text/html");
+    res.setHeader(["Content-type", "text/html"]);
     res.send("<h1>Book info goes here</h1>");
 }
 
@@ -100,7 +100,7 @@ By default, Vatican comes with a simple request parser, to gather things like th
 The response object is the original response passed by Node.js, with a few extra methods:
 
 + send: Will write all headers, text and will also end the response.
-+ setHeaders: Sets a header to be later sent by _send_. The format of the header is: ```{ 'header-name': 'header-value' }```
++ setHeaders: Sets a header to be later sent by _send_. The format of the header is: ```[ 'header-name', 'header-value' ]```
 + statusCode: This is not a method, but a property, and will be used by _send_ to set the status code of the response, by default its value is 200.
 
 #Contributing
