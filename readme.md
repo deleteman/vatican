@@ -3,6 +3,8 @@
 Vatican attemps to be a micro-framework for creating APIs as quickly as possible.
 One of the key features of Vatican is the use of annotations on methods to define the endpoints of the API.
 
+For a full code example of an app using Vatican, check out this repo: https://github.com/deleteman/vatican-example
+
 ##Using Vatican
 
 To install Vatican just run:
