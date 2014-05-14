@@ -7,9 +7,13 @@
         "type": "git",
         "url": "https://github.com/deleteman/vatican"
     },
-    "version": "0.1.1",
+    "bin": {
+        "vatican": "./bin/vatican"
+        },
+    "version": "1.0.0",
     "dependencies": {
         "winston": "0.7.3",
-        "lodash": "2.4.1"
+        "lodash": "2.4.1",
+        "colors": "0.6.2"
     }
 }
