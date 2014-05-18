@@ -28,7 +28,7 @@ The configuration options are the following:
 + *port*: The port where the server will be listening to.
 + *handlers*: The folder where all the handlers are stored.
 + *cors* _(optional)_: CORS header options.
-+ *requestParser* _(optinal)_ : The path to the custom request parser file.
++ *requestParser* _(optional)_ : The path to the custom request parser file.
 
 ###CORS options
 By default, Cross Origin Resource Sharing is disabled on Vatican, but can be enabled by setting this option to *true* (which sets Access-Allow-Origin to "*" and Access-Control-Allow-Methods to "*") or by setting specific options:
@@ -145,7 +145,7 @@ Books.prototype.delete = function(req, res) {}
 Books.prototype.newBook = function(req, res) {}
 ```
 
-The method will have to be manually set and the urls will have to be manually fixed by the developer.
+The method on each endpoint will have to be manually set and the urls will have to be manually fixed by the developer.
 
 
 #Contributing
@@ -173,3 +173,4 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
