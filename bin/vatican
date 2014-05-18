@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var ViewHandler = require("../lib/viewHandler"),
+    CommandFactory = require("../lib/commandFactory");
+
+var arguments = process.argv.slice(2);
+
+if(arguments.length == 0) {
+    console.log("Vatican Command Line Tool helps you deal with the routes of your api easily.");
+    console.log("Commands: ");
+    console.log(" - list: Lists all the routes from your handlers");
+    console.log(" - g [handlerName] [actions]: Adds a handler with the routes listed (i.e: vatican g handler books list, get, delete, post)");
+    return;
+}
+
+
+var command = CommandFactory.getCommand(arguments);
+command.run(function(err, result) {
+	ViewHandler.show(err, command, result);
+});

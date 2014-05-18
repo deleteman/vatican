@@ -1,0 +1,5 @@
+{
+	"port": 8003,
+	"handlers": "../vatican-example/lib",
+	"cors": true
+}

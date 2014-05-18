@@ -18,25 +18,28 @@ Setting up the vatican server is quite easy:
 ```javascript
 var vatican = require("vatican");
 
-var app = new vatican({
-    port: 8003,
-    handlers: "./lib"
-});
+var app = new vatican();
 
 app.start();
 ```
+The configuration for the server will be loaded from a json file on your project's root called "vatica-conf.json".
+The configuration options are the following:
 
-+ Require vatican
-+ Create a new instance, passing info like port and handlers path (folder where all the request handlers will reside)
-+ And start up the server
++ *port*: The port where the server will be listening to.
++ *handlers*: The folder where all the handlers are stored.
++ *cors* _(optional)_: CORS header options.
++ *requestParser* _(optional)_ : The path to the custom request parser file.
 
-The options that can be passed on the constructor are:
+###CORS options
+By default, Cross Origin Resource Sharing is disabled on Vatican, but can be enabled by setting this option to *true* (which sets Access-Allow-Origin to "*" and Access-Control-Allow-Methods to "*") or by setting specific options:
 
-+ port (required): Specifies the http port for the server to listen on.
-+ handlers (required): The folder where all the handlers will reside. *Needs to be a relative path right now*
-+ requestParser (optional): The object that will parse the request and gather important data from it.
++ *access_allow_origin*: Access-Allow-Origin
++ *acess_control_allow_methods*:  Access-Control-Allow-Methods
++ *access_control_expose_headers*: Access-Control-Expose-Headers
++ *access_control_max_age*: Access-Control-Max-Age
++ *access_control_allow_credentials*: Access-Control-Allow-Credentials
++ *access_control_allow_headers*: Access-Control-Allow-Headers
 
-That's it for now.
 
 ##Handlers
 
@@ -105,6 +108,61 @@ The response object is the original response passed by Node.js, with a few extra
 + setHeaders: Sets a header to be later sent by _send_. The format of the header is: ```[ 'header-name', 'header-value' ]```
 + statusCode: This is not a method, but a property, and will be used by _send_ to set the status code of the response, by default its value is 200.
 
+##Command line tool
+
+Vatican comes with a command line tool to help with tasks like listing the routes of your api, and creating new handlers.
+
+###Listing all routes 
+
+The command to list all routes is:
+
+```
+your-project-folder$ vatican list
+```
+
+###Adding new handlers
+
+To add a new handler to the project, you just pass it's name and it's actions, like so:
+
+```
+your-project-folder$ vatican g books "list, get, delete, newBook"
+```
+And a new handler file, called _books.js_ will be saved inside your handlers folder, and will look like this:
+
+
+```javascript
+function Books() {}
+@endpoint (url: /books method: ???) 
+Books.prototype.list = function(req, res) {}
+
+@endpoint (url: /books method: ???)
+Books.prototype.get = function(req, res) {}
+
+@endpoint (url: /books method: ???)
+Books.prototype.delete = function(req, res) {}
+
+@endpoint (url: /books method: ???)
+Books.prototype.newBook = function(req, res) {}
+```
+
+The method on each endpoint will have to be manually set and the urls will have to be manually fixed by the developer.
+
+
+###Create a new project
+
+Using Vatican's cli tool, you can start up your project, just by doing the following:
+
+```
+$ vatican new library -p 5000 -h ./handlers
+```
+This will create a new folder, with the sub-folder _handlers_ inside. Also, it'll create a _vatican-conf.json_ file, with the port and handler configuration there.
+
+The *-p* and *-h* attributes are optional, and by default, they will be set to:
+
++ *-p*: 8753
++ *-h*: "./handlers"
+
+
 #Contributing
 
 If you feel like helping out by bug-fixing, or contributing with a new feature or whatever, just follow these simple steps:
@@ -130,3 +188,4 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
