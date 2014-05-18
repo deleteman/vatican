@@ -148,6 +148,21 @@ Books.prototype.newBook = function(req, res) {}
 The method on each endpoint will have to be manually set and the urls will have to be manually fixed by the developer.
 
 
+###Create a new project
+
+Using Vatican's cli tool, you can start up your project, just by doing the following:
+
+```
+$ vatican new library -p 5000 -h ./handlers
+```
+This will create a new folder, with the sub-folder _handlers_ inside. Also, it'll create a _vatican-conf.json_ file, with the port and handler configuration there.
+
+The *-p* and *-h* attributes are optional, and by default, they will be set to:
+
++ *-p*: 8753
++ *-h*: "./handlers"
+
+
 #Contributing
 
 If you feel like helping out by bug-fixing, or contributing with a new feature or whatever, just follow these simple steps:
