@@ -108,6 +108,72 @@ The response object is the original response passed by Node.js, with a few extra
 + setHeaders: Sets a header to be later sent by _send_. The format of the header is: ```[ 'header-name', 'header-value' ]```
 + statusCode: This is not a method, but a property, and will be used by _send_ to set the status code of the response, by default its value is 200.
 
+##Pre and Post processors (A.K.A middleware support)
+
+Vatican.js has the ability to support connect-like middleware, but here they're called _preprocessors_ and _postprocessors_.
+
+###Preprocessors
+
+Much like Connect middleware, these are functions that receive 3 parameters: request, response and next. They are run sequentially in the same order they are added.
+In order to call the next preprocessor, each one needs to call the _next_ function passed as the last parameter.
+
+###Postprocessors
+
+Just like the preprocessors, only they run after the _req.send_ call. Can be used to affect all responses out of our API (for instance, validate the response, format it, etc)
+
+###Error handlers
+
+Just like Express, Vatican will grab any pre or post processors with 4 parameters and treat it like an error handler. To trigger the errors, the processor functions need to call _next_ and pass it the error object.
+
+###Using the processors
+
+Here is an example that uses several pre and post -processors
+
+
+```javascript
+var vatican = require("../vatican");
+
+var app = new vatican();
+
+//Adds a preprocessor to the queue
+app.preprocess(function(req, res, next) {
+	if(req.params.query.key === '123') { //we require a key to access all endpoints
+		next();
+	} else {
+		next("Error: invalid key") //Calls the error handlers queue
+	}
+})
+
+//Logs every request on console
+app.preprocess(function(req, res, next) {
+	console.log("Request received: ")
+	console.log(req.url)
+	next();
+})
+
+//Preprocessors error handler function logs on console
+app.preprocess(function(err, req, res, next ) {
+	console.log("ERROR FOUND: " + err);
+	next(err);
+})
+
+//Sends the error message instead of the normal response
+app.preprocess(function(err, req, res, next) {
+	res.send("There's been an error: " + err)
+})
+
+//Post processor that formats the reponse as a json
+app.postprocess(function(req, res, next) {
+	if(typeof res.body != 'object') {
+		res.setHeader(['content-type', 'application/json'])
+		res.body = { response: res.body, url: req.url };
+	}
+	next();
+})
+app.start();
+```
+
+
 ##Command line tool
 
 Vatican comes with a command line tool to help with tasks like listing the routes of your api, and creating new handlers.
