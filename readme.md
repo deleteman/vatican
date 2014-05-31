@@ -30,6 +30,24 @@ The configuration options are the following:
 + *cors* _(optional)_: CORS header options.
 + *requestParser* _(optional)_ : The path to the custom request parser file.
 
+###Overwriting the config file
+
+If the configuration for the server needs to be dynamic, then the json object can be passed to the constructor like so:
+
+```javascript
+var vatican = require("vatican");
+
+var app = new vatican({
+	port: 9000,
+	handlers: "./lib",
+	cors: true
+});
+
+app.start();
+```
+
+*If an object is received by the constructor, the config file will be ignored.*
+
 ###CORS options
 By default, Cross Origin Resource Sharing is disabled on Vatican, but can be enabled by setting this option to *true* (which sets Access-Allow-Origin to "*" and Access-Control-Allow-Methods to "*") or by setting specific options:
 
@@ -186,12 +204,18 @@ The command to list all routes is:
 your-project-folder$ vatican list
 ```
 
+By default, _vatican_ will read the configuration from the _vatican-config.json_ file to determine where to read the handlers data from. This configuration can be ovewritten by passing the "-h" modifier to the command:
+
+```
+your-project-folder$ vatican list  *-h ./customFolder*
+```
+
 ###Adding new handlers
 
 To add a new handler to the project, you just pass it's name and it's actions, like so:
 
 ```
-your-project-folder$ vatican g books "list, get, delete, newBook"
+your-project-folder$ vatican g books list get delete newBook
 ```
 And a new handler file, called _books.js_ will be saved inside your handlers folder, and will look like this:
 
@@ -211,6 +235,12 @@ Books.prototype.delete = function(req, res) {}
 Books.prototype.newBook = function(req, res) {}
 ```
 
+By default, _vatican_ will read the configuration from the _vatican-config.json_ file to determine where to save the new handler file. This configuration can be ovewritten by passing the "-h" modifier to the command:
+
+```
+your-project-folder$ vatican g books list get delete newBook *-h ./customFolder*
+```
+
 The method on each endpoint will have to be manually set and the urls will have to be manually fixed by the developer.
 
 
@@ -227,6 +257,41 @@ The *-p* and *-h* attributes are optional, and by default, they will be set to:
 
 + *-p*: 8753
 + *-h*: "./handlers"
+
+#Changelog
+
+##v 1.2.0
+
++ Fixed support for PUT requests
++ Added configuration overwrite on Vatican constructor and cli commands
++ Added callback function to _start_ method of _Vatican_ called after successful start of http server.
++ Updated cli help
++ Handlers are now stored in-memory after the first time they're loaded, so they're not loaded on every request.
+
+##v 1.1.0
+
++ Added pre-processor to request
++ Added post-processor to response
++ Fixed bug causing incorrect request parsing on non-post requests.
+
+##v 1.0.1
+
++ Changed default handler folder for create command
++ Minor readme fixes
+
+##v 1.0.0
+
++ Added create new project command
++ Minor fixes on readme
+
+##v 0.1.1
+
++ Added auto-stringify of objects passed to the send method on the response object.
++ Edited readme
+
+##v 0.0.1
+
++ First version
 
 
 #Contributing

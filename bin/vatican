@@ -8,8 +8,9 @@ var arguments = process.argv.slice(2);
 if(arguments.length == 0) {
     console.log("Vatican Command Line Tool helps you deal with the routes of your api easily.");
     console.log("Commands: ");
-    console.log(" - list: Lists all the routes from your handlers");
-    console.log(" - g [handlerName] [actions]: Adds a handler with the routes listed (i.e: vatican g handler books list, get, delete, post)");
+    console.log(" list [-h handlers_path]: Lists all the routes from your handlers. The -h modified can be passed to specify the folder where the handlers are stored.");
+    console.log(" g [handlerName] [options] [actions] : Adds a handler with the routes listed (i.e: vatican g books list get delete post).");
+    console.log("                                       Options: -h[folder relative path] - The path to the handlers folder (optional)");
     return;
 }
 
