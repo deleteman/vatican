@@ -207,7 +207,7 @@ your-project-folder$ vatican list
 By default, _vatican_ will read the configuration from the _vatican-config.json_ file to determine where to read the handlers data from. This configuration can be ovewritten by passing the "-h" modifier to the command:
 
 ```
-your-project-folder$ vatican list  *-h ./customFolder*
+your-project-folder$ vatican list  -h ./customFolder
 ```
 
 ###Adding new handlers
@@ -238,7 +238,7 @@ Books.prototype.newBook = function(req, res) {}
 By default, _vatican_ will read the configuration from the _vatican-config.json_ file to determine where to save the new handler file. This configuration can be ovewritten by passing the "-h" modifier to the command:
 
 ```
-your-project-folder$ vatican g books list get delete newBook *-h ./customFolder*
+your-project-folder$ vatican g books list get delete newBook -h ./customFolder
 ```
 
 The method on each endpoint will have to be manually set and the urls will have to be manually fixed by the developer.
