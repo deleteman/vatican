@@ -18,6 +18,10 @@ $ npm install vatican
 
 #Changelog
 
+##v 1.2.2
+
++ Fixed bug causing problems with the pre-processing chain and the handler methods.
+
 ##v 1.2.1
 
 + Fixed bug causing vatican to match incorrecly urls with similar templates
