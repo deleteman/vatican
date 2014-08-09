@@ -18,6 +18,11 @@ $ npm install vatican
 
 #Changelog
 
+##v 1.2.3
+
++ Fixed bug preventing the handlers from loading installed modules using 'require'
+
+
 ##v 1.2.2
 
 + Fixed bug causing problems with the pre-processing chain and the handler methods.
