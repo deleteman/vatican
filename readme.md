@@ -18,6 +18,11 @@ $ npm install vatican
 
 #Changelog
 
+
+##v 1.2.4
+
++ Fixed bug causing incorrect parsing of post/put body content
+
 ##v 1.2.3
 
 + Fixed bug preventing the handlers from loading installed modules using 'require'
