@@ -1,5 +1,7 @@
 #Vatican
 
+[![NPM](https://nodei.co/npm/vatican.png?downloads=true&stars=true)](https://nodei.co/npm/vatican/)
+
 Vatican attemps to be a micro-framework for creating APIs as quickly as possible.
 One of the key features of Vatican is the use of annotations on methods to define the endpoints of the API.
 
@@ -18,6 +20,12 @@ $ npm install vatican
 
 #Changelog
 
+##v 1.3.0
+
++ Added name attribute to @endpoint annotation
++ Added ability to set pre-processors on specific endpoints by name
++ *TODO* Added model generator working with MongoDB
++ *TODO* Added index.js and package.json generator
 
 ##v 1.2.4
 
