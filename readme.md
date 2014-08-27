@@ -25,7 +25,7 @@ $ npm install vatican
 + Added name attribute to @endpoint annotation
 + Added ability to set pre-processors on specific endpoints by name
 + *TODO* Added model generator working with MongoDB
-+ *TODO* Added index.js and package.json generator
++ Added index.js and package.json generator
 
 ##v 1.2.4
 
