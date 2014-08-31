@@ -1,10 +1,11 @@
-var mongoose = require("mongoose"),
-	Schema = mongoose.Schema
+
+module.exports = function(mongoose) {
+	var Schema = mongoose.Schema
 
 
-var SchemaObj = new Schema({
-	[[FIELDS]]
-})
+	var SchemaObj = new Schema({
+		[[FIELDS]]
+	})
 
-module.exports = mongoose.model([[NAME]], SchemaObj)
-
+	return mongoose.model([[NAME]], SchemaObj)
+}
