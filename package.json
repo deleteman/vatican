@@ -14,6 +14,7 @@
     "dependencies": {
         "winston": "0.7.3",
         "lodash": "2.4.1",
-        "colors": "0.6.2"
+        "colors": "0.6.2",
+        "mongoose": "*"
     }
 }
