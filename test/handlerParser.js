@@ -6,6 +6,34 @@ var _ = require('lodash');
 var dir = __dirname + '/fixtures/handlerParser';
 
 describe("handlerParser.parse method", function() {
+    describe('supported methods', function() {
+        var supportedMethodsDir = dir + '/supportedMethods';
+        ['get', 'put', 'post', 'delete']
+            .forEach(function(method) {
+                it(method, function(done) {
+                    var dirname = supportedMethodsDir + '/' + method;
+                    parse(dirname, function(err, paths) {
+                        if (err) return done(err);
+
+                        paths[0].method.should.be.equal(method.toUpperCase());
+                        done();
+                    });
+
+                });
+            });
+
+        it('unsuported', function(done) {
+            var dirname = supportedMethodsDir + '/unsuported';
+            parse(dirname, function(err, paths) {
+                if (err) return done(err);
+
+                paths.length.should.be.equal(0);
+                done();
+            });
+
+        });
+    });
+
     describe('', function() { 
         it("the @endpoint does not follow any character", function(done) {
             var dirname = dir + '/notFollowAnyCharacter';
@@ -28,7 +56,7 @@ describe("handlerParser.parse method", function() {
             
             var compareWith = {
                 url: '/books',
-                method: 'get',
+                method: 'GET',
                 action: 'list',
                 handlerPath: dirname + '/default.js',
                 handlerName: 'default',
@@ -58,7 +86,7 @@ describe("handlerParser.parse method", function() {
 
             var compareWith = {
                 url: '/books',
-                method: 'get',
+                method: 'GET',
                 action: 'list',
                 handlerPath: dirname + '/default.js',
                 handlerName: 'default',
@@ -87,7 +115,7 @@ describe("handlerParser.parse method", function() {
 
             var compareWith = {
                 url: '/books',
-                method: 'get',
+                method: 'GET',
                 action: 'list',
                 handlerPath: dirname + '/default.js',
                 handlerName: 'default',
@@ -115,7 +143,7 @@ describe("handlerParser.parse method", function() {
                 
                 var compareWith = {
                     url: '/books',
-                    method: 'get',
+                    method: 'GET',
                     action: 'list',
                     handlerPath: dirname + '/default.js',
                     handlerName: 'default',
@@ -140,7 +168,7 @@ describe("handlerParser.parse method", function() {
                 
                 var compareWith = {
                     url: '/books',
-                    method: 'get',
+                    method: 'GET',
                     action: 'list',
                     name: 'name_param',
                     handlerPath: dirname + '/default.js',
@@ -159,5 +187,4 @@ describe("handlerParser.parse method", function() {
             });
         });
     });
-
 });
