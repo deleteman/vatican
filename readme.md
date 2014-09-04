@@ -9,10 +9,14 @@ For a full code example of an app using Vatican, check out this repo: https://gi
 
 ##Installing Vatican
 
-```
+```bash
 $ npm install vatican
 ```
+##Running the tests
 
+```bash
+$ npm test
+```
 #More info
 
 + Vatican.js main site: http://vaticanjs.info
@@ -22,12 +26,16 @@ $ npm install vatican
 
 ##v 1.3.0
 
-+ Added name attribute to @endpoint annotation
++ Added new _name_ attribute to @endpoint annotation
 + Added ability to set pre-processors on specific endpoints by name
-+ Added model generator working with MongoDB
++ Added model generator working with MongoDB 
 + Auto generate handlers method's code based on their name
 + New generate syntax, allowing to specify attributes, types and http methods
 + Added index.js and package.json generator
++ Added tests to main components (Still needs more work)
++ Added removal of comments on handlers files, so now if you comment out an endpoint, it won't be parsed.
++ Improved handler parser regex 
++ Improved general processing of handler file code.
 
 ##v 1.2.4
 
