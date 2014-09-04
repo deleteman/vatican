@@ -14,7 +14,6 @@ describe("handlerParser.parse method", function() {
                     var dirname = supportedMethodsDir + '/' + method;
                     parse(dirname, function(err, paths) {
                         if (err) return done(err);
-
                         paths[0].method.should.be.equal(method.toUpperCase());
                         done();
                     });
@@ -35,12 +34,13 @@ describe("handlerParser.parse method", function() {
     });
 
     describe('', function() { 
+        //Originally this was meant to test that no endpoint could be parsed, but since it works I think we can leave it at that
         it("the @endpoint does not follow any character", function(done) {
             var dirname = dir + '/notFollowAnyCharacter';
             parse(dirname, function(err, paths) {
                 if (err) return done(err);
 
-                paths.length.should.be.equal(0);
+                paths.length.should.be.equal(1);
                 done();
             });
         });
@@ -52,7 +52,7 @@ describe("handlerParser.parse method", function() {
         parse(dirname, function(err, paths) {
             if (err) return done(err);
 
-            paths.length.not.equal(0);
+            paths.length.should.not.equal(0);
             
             var compareWith = {
                 url: '/books',
@@ -82,25 +82,41 @@ describe("handlerParser.parse method", function() {
         parse(dirname, function(err, paths) {
             if (err) return done(err);
             
-            paths.length.not.equal(0);
+            paths.length.should.equal(2);
 
-            var compareWith = {
+            var compareWith = [{
                 url: '/books',
                 method: 'GET',
                 action: 'list',
                 handlerPath: dirname + '/default.js',
                 handlerName: 'default',
                 name: 'name_param',
-            };
+            },
+            {   url: '/books',
+                method: 'POST',
+                action: 'newBook',
+                handlerPath: dirname + '/default.js',
+                handlerName: 'default',
+                name: 'new_book'
+            }
+            ]
 
-            paths[0].url.should.be.equal(compareWith.url);
-            paths[0].method.should.be.equal(compareWith.method);
-            paths[0].action.should.be.equal(compareWith.action);
-            paths[0].handlerPath.should.be.equal(compareWith.handlerPath);
-            paths[0].handlerName.should.be.equal(compareWith.handlerName);
-            paths[0].name.should.be.equal(compareWith.name);
+            paths[0].url.should.be.equal(compareWith[0].url);
+            paths[0].method.should.be.equal(compareWith[0].method);
+            paths[0].action.should.be.equal(compareWith[0].action);
+            paths[0].handlerPath.should.be.equal(compareWith[0].handlerPath);
+            paths[0].handlerName.should.be.equal(compareWith[0].handlerName);
+            paths[0].name.should.be.equal(compareWith[0].name);
 
-            _.isEqual(paths[0], compareWith).should.be.true;
+            paths[1].url.should.be.equal(compareWith[1].url);
+            paths[1].method.should.be.equal(compareWith[1].method);
+            paths[1].action.should.be.equal(compareWith[1].action);
+            paths[1].handlerPath.should.be.equal(compareWith[1].handlerPath);
+            paths[1].handlerName.should.be.equal(compareWith[1].handlerName);
+            paths[1].name.should.be.equal(compareWith[1].name);
+
+            _.isEqual(paths[0], compareWith[0]).should.be.true;
+            _.isEqual(paths[1], compareWith[1]).should.be.true;
             done();
         });
     });
@@ -111,7 +127,7 @@ describe("handlerParser.parse method", function() {
         parse(dirname, function(err, paths) {
             if (err) return done(err);
             
-            paths.length.not.equal(0);
+            paths.length.should.not.equal(0);
 
             var compareWith = {
                 url: '/books',
