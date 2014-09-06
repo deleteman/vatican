@@ -54,6 +54,7 @@ describe('Processing Chain methods', function() {
 			pc = new ProcessingChain()
 			pc.add({fn: 1, names: ['first']})
 			pc.add({fn: 2, names: ['second']})
+			pc.findFirstValidItem('first').fn.should.equal(1)
 			pc.findFirstValidItem('second').fn.should.equal(2)
 		})
 	})
