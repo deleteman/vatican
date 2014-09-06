@@ -60,7 +60,7 @@ describe('Processing Chain methods', function() {
 	})
 
 	describe("@runChain", function() {
-		it("should run the chain correctly", function(done) {
+		it("should run the chain correctly without handler name", function(done) {
 			var result = ""
 			pc = new ProcessingChain()
 			pc.add({fn: function(req, res, n) {
@@ -68,9 +68,11 @@ describe('Processing Chain methods', function() {
 				n()
 			}})
 			pc.add({fn: function(req, res, n) {
-				result+= "2"
-				n()
-			}})
+									result+= "2"
+									n()
+								},
+					names: ['ok'],
+				})
 			pc.add({fn: function(req, res, n) {
 				result+= "3"
 				n()
@@ -79,6 +81,43 @@ describe('Processing Chain methods', function() {
 				result.should.equal("123")
 				done()
 			}, null)
+		})
+
+		it("should run the chain correctly with handler name", function(done) {
+			var result = ""
+			pc = new ProcessingChain()
+			pc.add({fn: function(req, res, n) {
+				result+= "1"
+				n()
+			}})
+			pc.add({fn: function(req, res, n) {
+									result+= "2"
+									n()
+								},
+					names: ['ok'],
+				})
+			pc.add({fn: function(req, res, n) {
+				result+= "3"
+				n()
+			}})
+
+			pc.add({fn: function(req, res, n) {
+						result+= "4"
+						n()
+					},
+					names: ['not ok', 'nott1 ok']
+					});
+
+			pc.add({fn: function(req, res, n) {
+						result+= "5"
+						n()
+					},
+					names: ['not ok', 'ok']
+					});
+			pc.runChain({}, {}, function() {
+				result.should.equal("1235")
+				done()
+			}, {name: 'ok'})
 		})
 
 		it("should switch to the error chain if there is a problem", function(done) {
