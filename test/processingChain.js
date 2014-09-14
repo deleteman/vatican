@@ -77,10 +77,14 @@ describe('Processing Chain methods', function() {
 				result+= "3"
 				n()
 			}})
-			pc.runChain({}, {}, function() {
-				result.should.equal("123")
-				done()
-			}, null)
+			pc.runChain({
+				req: {}, 
+				res: {}, 
+			    finalFn: function() {
+						result.should.equal("123")
+						done()
+				},
+			})
 		})
 
 		it("should run the chain correctly with handler name", function(done) {
@@ -114,10 +118,15 @@ describe('Processing Chain methods', function() {
 					},
 					names: ['not ok', 'ok']
 					});
-			pc.runChain({}, {}, function() {
-				result.should.equal("1235")
-				done()
-			}, {name: 'ok'})
+			pc.runChain({
+				req: {}, 
+				res: {}, 
+				finalFn: function() {
+					result.should.equal("1235")
+					done()
+				}, 
+				handler: {name: 'ok'}
+			})
 		})
 
 		it("should switch to the error chain if there is a problem", function(done) {
@@ -144,10 +153,14 @@ describe('Processing Chain methods', function() {
 				result += 'e2'
 				n()
 			}})
-			pc.runChain({}, {}, function() {
-				result.should.equal("12errore2")
-				done()
-			}, null)		
+			pc.runChain({
+				req: {}, 
+				res: {}, 
+				finalFn: function() {
+					result.should.equal("12errore2")
+					done()
+				}
+			})		
 		})
 
 		it("should run correctly if there are named endpoints involved", function(done) {
@@ -171,10 +184,15 @@ describe('Processing Chain methods', function() {
 				n()
 			}, names: ["endpoint2", "endpoint1"]})
 
-			pc.runChain({}, {},  function() {
-				result.should.equal("134")
-				done()
-			}, {name: 'endpoint2'})				
+			pc.runChain({
+				req: {}, 
+				res: {},  
+				finalFn: function() {
+					result.should.equal("134")
+					done()
+				}, 
+				handler: {name: 'endpoint2'}
+			})				
 		})
 	})
 })
