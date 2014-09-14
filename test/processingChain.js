@@ -47,15 +47,15 @@ describe('Processing Chain methods', function() {
 			pc = new ProcessingChain()
 			pc.add({fn: 1})
 			pc.add({fn: 2})
-			pc.findFirstValidItem().fn.should.equal(1)
+			pc.findFirstValidItem(undefined, pc.chain).fn.should.equal(1)
 		})
 
 		it("should correctly find the first valid process when there is an endpoint name set", function() {
 			pc = new ProcessingChain()
 			pc.add({fn: 1, names: ['first']})
 			pc.add({fn: 2, names: ['second']})
-			pc.findFirstValidItem('first').fn.should.equal(1)
-			pc.findFirstValidItem('second').fn.should.equal(2)
+			pc.findFirstValidItem('first', pc.chain).fn.should.equal(1)
+			pc.findFirstValidItem('second', pc.chain).fn.should.equal(2)
 		})
 	})
 
