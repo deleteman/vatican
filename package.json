@@ -24,6 +24,7 @@
     "devDependencies": {
         "should": "4.0.4",
         "mocha": "1.21.4",
+        "supertest": "0.13.0",
         "istanbul": "0.3.0"
     }
 }
