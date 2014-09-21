@@ -47,19 +47,20 @@ describe('Processing Chain methods', function() {
 			pc = new ProcessingChain()
 			pc.add({fn: 1})
 			pc.add({fn: 2})
-			pc.findFirstValidItem().fn.should.equal(1)
+			pc.findFirstValidItem(undefined, pc.chain).fn.should.equal(1)
 		})
 
 		it("should correctly find the first valid process when there is an endpoint name set", function() {
 			pc = new ProcessingChain()
 			pc.add({fn: 1, names: ['first']})
 			pc.add({fn: 2, names: ['second']})
-			pc.findFirstValidItem('second').fn.should.equal(2)
+			pc.findFirstValidItem('first', pc.chain).fn.should.equal(1)
+			pc.findFirstValidItem('second', pc.chain).fn.should.equal(2)
 		})
 	})
 
 	describe("@runChain", function() {
-		it("should run the chain correctly", function(done) {
+		it("should run the chain correctly without handler name", function(done) {
 			var result = ""
 			pc = new ProcessingChain()
 			pc.add({fn: function(req, res, n) {
@@ -67,17 +68,65 @@ describe('Processing Chain methods', function() {
 				n()
 			}})
 			pc.add({fn: function(req, res, n) {
-				result+= "2"
-				n()
-			}})
+									result+= "2"
+									n()
+								},
+					names: ['ok'],
+				})
 			pc.add({fn: function(req, res, n) {
 				result+= "3"
 				n()
 			}})
-			pc.runChain({}, {}, function() {
-				result.should.equal("123")
-				done()
-			}, null)
+			pc.runChain({
+				req: {}, 
+				res: {}, 
+			    finalFn: function() {
+						result.should.equal("123")
+						done()
+				},
+			})
+		})
+
+		it("should run the chain correctly with handler name", function(done) {
+			var result = ""
+			pc = new ProcessingChain()
+			pc.add({fn: function(req, res, n) {
+				result+= "1"
+				n()
+			}})
+			pc.add({fn: function(req, res, n) {
+									result+= "2"
+									n()
+								},
+					names: ['ok'],
+				})
+			pc.add({fn: function(req, res, n) {
+				result+= "3"
+				n()
+			}})
+
+			pc.add({fn: function(req, res, n) {
+						result+= "4"
+						n()
+					},
+					names: ['not ok', 'nott1 ok']
+					});
+
+			pc.add({fn: function(req, res, n) {
+						result+= "5"
+						n()
+					},
+					names: ['not ok', 'ok']
+					});
+			pc.runChain({
+				req: {}, 
+				res: {}, 
+				finalFn: function() {
+					result.should.equal("1235")
+					done()
+				}, 
+				handler: {name: 'ok'}
+			})
 		})
 
 		it("should switch to the error chain if there is a problem", function(done) {
@@ -104,10 +153,14 @@ describe('Processing Chain methods', function() {
 				result += 'e2'
 				n()
 			}})
-			pc.runChain({}, {}, function() {
-				result.should.equal("12errore2")
-				done()
-			}, null)		
+			pc.runChain({
+				req: {}, 
+				res: {}, 
+				finalFn: function() {
+					result.should.equal("12errore2")
+					done()
+				}
+			})		
 		})
 
 		it("should run correctly if there are named endpoints involved", function(done) {
@@ -131,10 +184,15 @@ describe('Processing Chain methods', function() {
 				n()
 			}, names: ["endpoint2", "endpoint1"]})
 
-			pc.runChain({}, {},  function() {
-				result.should.equal("134")
-				done()
-			}, {name: 'endpoint2'})				
+			pc.runChain({
+				req: {}, 
+				res: {},  
+				finalFn: function() {
+					result.should.equal("134")
+					done()
+				}, 
+				handler: {name: 'endpoint2'}
+			})				
 		})
 	})
 })
