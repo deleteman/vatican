@@ -7,6 +7,10 @@
         "type": "git",
         "url": "https://github.com/deleteman/vatican"
     },
+    "contributors": [{
+        "name": "Badarau Petru",
+        "email": "smart__petea@mail.ru"
+    }],
     "scripts": {
         "test": "istanbul cover node_modules/.bin/_mocha -- -u exports -R spec test/*.js"
     },
