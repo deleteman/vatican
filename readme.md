@@ -24,7 +24,7 @@ $ npm test
 
 #Changelog
 
-##v 1.3.0
+##v 1.3.1
 
 + Added new _name_ attribute to @endpoint annotation
 + Added ability to set pre-processors on specific endpoints by name
@@ -36,6 +36,7 @@ $ npm test
 + Added removal of comments on handlers files, so now if you comment out an endpoint, it won't be parsed.
 + Improved handler parser regex 
 + Improved general processing of handler file code.
++ Changed request parser to auto-parse content of PUT and POST requests into JSON (when possible)
 
 ##v 1.2.4
 
