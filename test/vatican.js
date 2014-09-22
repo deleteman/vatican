@@ -11,7 +11,7 @@ describe("Vatican methods", function() {
 	})
 	var matchFound = null
 
-	describe("@checkOpptions", function(){ 
+	describe("@checkOptions", function(){ 
 		it("should throw an error if no port is specified", function() {
 			(function() {
 				v = new Vatican({handlers: ''})
@@ -59,6 +59,31 @@ describe("Vatican methods", function() {
 			matchFound.action.should.equal("killPeep")
 			matchFound.handlerName.should.equal('People')
 			done()
+		})
+	})
+
+	describe("@getCorrectModel", function() {
+		it("should return FALSE if there is no db connection to load models", function(done) {
+			vatican.getCorrectModel().should.equal(false)			
+			done()
+		}) 
+
+		it("should return the correct model if there is one", function(done) {
+			var fakeVat = vatican
+			fakeVat.__dbStart = function() {
+				return {
+					on: function() {},
+					error: function () {},
+					once: function(str, cb) {
+						cb()
+					}
+				}
+			}
+
+			fakeVat.dbStart({schemasFolder: __dirname + "/testModels"}, function (err) {
+				_.keys(fakeVat.dbmodels).length.should.equal(1);
+				done()
+			})
 		})
 	})
 
