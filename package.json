@@ -9,7 +9,7 @@
     },
     "contributors": [{
         "name": "Badarau Petru",
-        "email": "smart__petea@mail.ru"
+        "email": "smart__petea@mail.rku"
     }],
     "scripts": {
         "test": "istanbul cover node_modules/.bin/_mocha -- -u exports -R spec test/*.js"
@@ -17,7 +17,7 @@
     "bin": {
         "vatican": "./bin/vatican"
         },
-    "version": "1.3.0",
+    "version": "1.3.1",
     "dependencies": {
         "winston": "0.7.3",
         "lodash": "2.4.1",
