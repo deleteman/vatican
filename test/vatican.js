@@ -96,4 +96,33 @@ describe("Vatican methods", function() {
 			done()
 		})
 	})
+
+	describe("@close", function() {
+		it('should close server', function() {
+			var app = new Vatican({
+				handlers: __dirname + '/fixtures/vatican/handlers',
+				port: 8888
+			})
+
+			app.start();
+
+			( app.server._handle != null ).should.be.true;
+
+			app.close();
+
+			( app.server._handle == null ).should.be.true;
+		});
+
+		it('should call callback on close', function( done ) {
+			var app = new Vatican({
+				handlers: __dirname + '/fixtures/vatican/handlers',
+				port: 8888
+			})
+
+			app.start();
+			app.close(function() {
+				done();
+			});
+		});
+	});
 })
