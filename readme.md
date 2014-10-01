@@ -24,6 +24,10 @@ $ npm test
 
 #Changelog
 
+##v 1.3.2
++ Added _close_ method on main server.
++ Fixed bug #30
+
 ##v 1.3.1
 
 + Added new _name_ attribute to @endpoint annotation
