@@ -110,6 +110,34 @@ describe('Processing Chain methods', function() {
 			}, null)		
 		})
 
+		it("should switch to the error chain if there is a problem and only one error handler", function(done) {
+			var result = ""
+			pc = new ProcessingChain()
+			pc.add({fn: function(req, res, n) {
+				result+= "1"
+				n()
+			}, names: []})
+			pc.add({fn: function(req, res, n) {
+				result+= "2"
+				n('error')
+			}, names: []})
+			pc.add({fn: function(req, res, n) {
+				result+= "3"
+				n()
+			}, names: []})
+
+			pc.add({fn: function(err, req, res, n) {
+				result += err
+				n()
+			}, names: []})
+			
+			pc.runChain({}, {}, function() {
+				result.should.equal("12error")
+				done()
+			}, null)		
+		})
+
+	
 		it("should run correctly if there are named endpoints involved", function(done) {
 			var result = ""
 			pc = new ProcessingChain()
