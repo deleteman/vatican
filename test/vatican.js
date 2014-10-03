@@ -12,11 +12,40 @@ describe("Vatican methods", function() {
 	var matchFound = null
 
 	describe("@checkOptions", function(){ 
+		var portErrorMessage = "Port must be a number from the range [0, 65535]";
+
 		it("should throw an error if no port is specified", function() {
 			(function() {
 				v = new Vatican({handlers: ''})
-			}).should.throw("Port not specified")
+			}).should.throw(portErrorMessage)
 		})
+
+		it("should throw an error if port is not a number", function() {
+			(function() {
+				v = new Vatican({handlers: '', port: '88'})
+			}).should.throw(portErrorMessage)
+		});
+
+		it("should throw an error if port is a negative number", function() {
+			(function() {
+				v = new Vatican({handlers: '', port: -1})
+			}).should.throw(portErrorMessage)
+		});
+
+		it("should throw an error if port is greater than 65535", function() {
+			(function() {
+				v = new Vatican({handlers: '', port: 65536})
+			}).should.throw(portErrorMessage)
+		});
+
+		it("should be ok for a port number from range [0, 65536]", function() {
+			(function() {
+				v = new Vatican({handlers: '', port: 65536})
+			}).should.throw(portErrorMessage)
+		});
+
+
+
 		it("should throw an error if no handlers folder is specified", function() {
 			(function() {
 				v = new Vatican({port: 123})
