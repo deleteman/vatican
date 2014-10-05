@@ -1,6 +1,7 @@
 var should = require('should'); //for mocha tests
 var Vatican = require("../lib/vatican")
 var _ = require('lodash');
+var path = require('path');
 
 
 describe("Vatican methods", function() {
@@ -45,10 +46,33 @@ describe("Vatican methods", function() {
 		});
 	});
 
+	describe("@getContext", function() {
+		it("() should return process.cwd()", function() {
+			Vatican.prototype.getContext().should.be.equal(process.cwd());
+		});
+
+		it("(absPath) should return absPath", function() {
+			var absPath = process.cwd();
+			Vatican.prototype.getContext(absPath).should.be.equal(absPath);
+		});
+
+		it("(relPath) should throw error", function() {
+			(function(){
+				var v = new Vatican("./ok");
+			}).should.throw("Context specified specified is not an absolute path");
+		});
+
+		it("(notDir) should throw error", function() {
+			(function(){
+				var v = new Vatican(path.resolve(process.cwd(), "wrong_file.txt"));
+			}).should.throw("Context specified can not be treated as directory");
+		});
+	});
+
 	describe("@checkOptions", function(){ 
 		it("should throw an error if no port is specified", function() {
 			(function() {
-				v = new Vatican({handlers: ''})
+				var v = new Vatican({handlers: ''})
 			}).should.throw("Port not specified")
 		})
 		it("should throw an error if no handlers folder is specified", function() {
