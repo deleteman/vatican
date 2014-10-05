@@ -5,11 +5,45 @@ var _ = require('lodash');
 
 describe("Vatican methods", function() {
 
-	var vatican = new Vatican({
-		handlers: __dirname + '/fixtures/vatican/handlers',
-		port: 88
-	})
+	var vatican = new Vatican(
+		__dirname,
+		{
+			handlers: 'fixtures/vatican/handlers',
+			port: 88
+		}
+	);
 	var matchFound = null
+
+	describe("@Vatican constructor", function() {
+		//the case new Vatican() without any params I did not analyzed because mocha can't support this case
+		it("(context)", function() {
+				var context = __dirname + "/fixtures/vatican";
+				var v = new Vatican(context);
+
+				v.context.should.be.equal(context);
+				v.options.handlers.should.be.equal(context + "/handlers");
+				v.options.port.should.be.equal(5000);
+		});
+
+		it("(options)", function() {
+			var absPath = __dirname + "/fixtures/vatican/handlers";
+			var v = new Vatican({ handlers: absPath, port: 88});
+
+			v.context.should.be.equal(process.cwd());
+			v.options.handlers.should.be.equal(absPath);
+			v.options.port.should.be.equal(88);
+		});
+
+		it("(context, options)", function() {
+				var context = __dirname + "/fixtures/vatican";
+				var absPath = __dirname + "/fixtures/vatican/handlers";
+				var v = new Vatican(context, { handlers: absPath, port: 88});
+
+				v.context.should.be.equal(context);
+				v.options.handlers.should.be.equal(absPath);
+				v.options.port.should.be.equal(88);
+		});
+	});
 
 	describe("@checkOptions", function(){ 
 		it("should throw an error if no port is specified", function() {
@@ -23,6 +57,7 @@ describe("Vatican methods", function() {
 			}).should.throw("Handlers folder not specified")
 		})
 	})
+
 
 	describe("@preprocess", function() {
 		it("should add a processor to the pre-processors chain", function() {
@@ -99,10 +134,13 @@ describe("Vatican methods", function() {
 
 	describe("@close", function() {
 		it('should close server', function() {
-			var app = new Vatican({
-				handlers: __dirname + '/fixtures/vatican/handlers',
-				port: 8888
-			})
+			var app = new Vatican(
+				__dirname,
+				{
+					handlers: 'fixtures/vatican/handlers',
+					port: 8888
+				}
+			);
 
 			app.start();
 
@@ -114,10 +152,13 @@ describe("Vatican methods", function() {
 		});
 
 		it('should call callback on close', function( done ) {
-			var app = new Vatican({
-				handlers: __dirname + '/fixtures/vatican/handlers',
-				port: 8888
-			})
+			var app = new Vatican(
+				__dirname, 
+				{
+					handlers: __dirname + '/fixtures/vatican/handlers',
+					port: 8888
+				}
+			);
 
 			app.start();
 			app.close(function() {
