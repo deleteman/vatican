@@ -1,4 +1,4 @@
-#Vatican
+# Vatican
 
 [![NPM](https://nodei.co/npm/vatican.png?downloads=true&stars=true)](https://nodei.co/npm/vatican/)
 
@@ -7,28 +7,28 @@ One of the key features of Vatican is the use of annotations on methods to defin
 
 For a full code example of an app using Vatican, check out this repo: https://github.com/deleteman/vatican-example
 
-##Installing Vatican
+## Installing Vatican
 
 ```bash
 $ npm install vatican
 ```
-##Running the tests
+## Running the tests
 
 ```bash
 $ npm test
 ```
-#More info
+# More info
 
 + Vatican.js main site: http://vaticanjs.info
 + Docs: http://vaticanjs.info/docs.html
 
-#Changelog
+# Changelog
 
-##v 1.3.2
+## v 1.3.2
 + Added _close_ method on main server.
 + Fixed bug #30
 
-##v 1.3.1
+## v 1.3.1
 
 + Added new _name_ attribute to @endpoint annotation
 + Added ability to set pre-processors on specific endpoints by name
@@ -42,25 +42,25 @@ $ npm test
 + Improved general processing of handler file code.
 + Changed request parser to auto-parse content of PUT and POST requests into JSON (when possible)
 
-##v 1.2.4
+## v 1.2.4
 
 + Fixed bug causing incorrect parsing of post/put body content
 
-##v 1.2.3
+## v 1.2.3
 
 + Fixed bug preventing the handlers from loading installed modules using 'require'
 
 
-##v 1.2.2
+## v 1.2.2
 
 + Fixed bug causing problems with the pre-processing chain and the handler methods.
 
-##v 1.2.1
+## v 1.2.1
 
 + Fixed bug causing vatican to match incorrecly urls with similar templates
 + Changed preprocessing chain, so that now handler methods recieve the _next_ function and can trigger the generic error handler functions
 
-##v 1.2.0
+## v 1.2.0
 
 + Fixed support for PUT requests
 + Added configuration overwrite on Vatican constructor and cli commands
@@ -68,33 +68,33 @@ $ npm test
 + Updated cli help
 + Handlers are now stored in-memory after the first time they're loaded, so they're not loaded on every request.
 
-##v 1.1.0
+## v 1.1.0
 
 + Added pre-processor to request
 + Added post-processor to response
 + Fixed bug causing incorrect request parsing on non-post requests.
 
-##v 1.0.1
+## v 1.0.1
 
 + Changed default handler folder for create command
 + Minor readme fixes
 
-##v 1.0.0
+## v 1.0.0
 
 + Added create new project command
 + Minor fixes on readme
 
-##v 0.1.1
+## v 0.1.1
 
 + Added auto-stringify of objects passed to the send method on the response object.
 + Edited readme
 
-##v 0.0.1
+## v 0.0.1
 
 + First version
 
 
-#Contributing
+# Contributing
 
 If you feel like helping out by bug-fixing, or contributing with a new feature or whatever, just follow these simple steps:
 
@@ -108,7 +108,7 @@ If you feel like helping out by bug-fixing, or contributing with a new feature o
 
 If you have questions, or just want to send your love/hate, drop me an e-mail at: deleteman@gmail.com
 
-#License
+# License
 
 The MIT License (MIT)
 
