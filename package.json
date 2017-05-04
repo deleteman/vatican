@@ -23,6 +23,7 @@
         "lodash": "2.4.1",
         "colors": "0.6.2",
         "mongoose": "*",
+        "qs": "2.2.4",
         "strip-json-comments": "1.0.1"
     },
     "devDependencies": {
