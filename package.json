@@ -2,22 +2,29 @@
     "name": "vatican",
     "author": "Fernando Doglio <deleteman@gmail.com>",
     "description": "Micro-framework designed to create REST APIs with minor effort and using annotations",
-    "keywords": ["rest", "api", "framework", "annotations"],
+    "keywords": [
+        "rest",
+        "api",
+        "framework",
+        "annotations"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/deleteman/vatican"
     },
-    "contributors": [{
-        "name": "Badarau Petru",
-        "email": "smart__petea@mail.rku"
-    }],
+    "contributors": [
+        {
+            "name": "Badarau Petru",
+            "email": "smart__petea@mail.rku"
+        }
+    ],
     "scripts": {
         "test": "istanbul cover node_modules/.bin/_mocha -- -u exports -R spec test/*.js"
     },
     "bin": {
         "vatican": "./bin/vatican"
-        },
-    "version": "1.3.2",
+    },
+    "version": "1.4.0",
     "dependencies": {
         "winston": "0.7.3",
         "lodash": "2.4.1",
@@ -26,8 +33,8 @@
         "strip-json-comments": "1.0.1"
     },
     "devDependencies": {
-        "should": "4.0.4",
+        "istanbul": "^0.4.5",
         "mocha": "1.21.4",
-        "istanbul": "0.3.0"
+        "should": "4.0.4"
     }
 }

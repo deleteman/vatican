@@ -24,6 +24,11 @@ $ npm test
 
 # Changelog
 
+## v 1.4.0
++ Added support for ES6 classes as resource handlers
++ Changed generator code to create ES6 compatible classes for resource handlers
++ Cleaned-up some code
+
 ## v 1.3.2
 + Added _close_ method on main server.
 + Fixed bug #30

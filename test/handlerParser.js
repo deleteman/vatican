@@ -4,10 +4,35 @@ var fs = require('fs');
 var _ = require('lodash');
 
 var dir = __dirname + '/fixtures/handlerParser';
+let supportedMethodsDir = dir + '/supportedMethods';
 
 describe("handlerParser.parse method", function() {
-    describe('supported methods', function() {
-        var supportedMethodsDir = dir + '/supportedMethods';
+    describe("ES6 supported methods", () => {
+        it("should support all basic methods method", (done) =>  {
+            let dirname = dir + "/es6-basic";
+            parse(dirname, (err, paths) => {
+                if(err) return done(err);
+                paths[0].method.should.be.equal('GET');
+                paths[1].method.should.be.equal('PUT');
+                paths[2].method.should.be.equal('POST');
+                paths[3].method.should.be.equal('DELETE');
+                done();
+            })
+        })
+        it("should support all basic methods methods without names", (done) =>  {
+            let dirname = dir + "/es6-no-names";
+            parse(dirname, (err, paths) => {
+                if(err) return done(err);
+                paths[0].method.should.be.equal('GET');
+                paths[1].method.should.be.equal('PUT');
+                paths[2].method.should.be.equal('POST');
+                paths[3].method.should.be.equal('DELETE');
+                done();
+            })
+        })
+    })
+
+    describe('ES5 supported methods', function() {
         ['get', 'put', 'post', 'delete']
             .forEach(function(method) {
                 it(method, function(done) {
