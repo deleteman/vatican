@@ -19,8 +19,7 @@ $ npm test
 ```
 # More info
 
-+ Vatican.js main site: http://vaticanjs.info
-+ Docs: http://vaticanjs.info/docs.html
++ Docs: https://www.fernandodoglio.com/vaticanjs-docs
 
 # Changelog
 
