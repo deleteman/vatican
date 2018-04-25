@@ -125,4 +125,34 @@ describe("Vatican methods", function() {
 			});
 		});
 	});
+
+	describe("@findHttpMethods", function() {
+		it('should contains all methods', function(done) {
+			var app = new Vatican({
+				handlers: __dirname + '/fixtures/httpOptions/handlers',
+				port: 8899
+			})
+
+			setTimeout(function() {
+				var methods = app.findHttpMethods('/people/cool');
+				['GET', 'POST', 'PUT', 'OPTIONS']
+					.forEach(function(method) {
+						methods.indexOf(method).should.not.eql(-1);
+					});
+				done();
+			}, 1000);
+		});
+
+		it('if method is not found should contains only "OPTIONS"', function(done) {
+			var app = new Vatican({
+				handlers: __dirname + '/fixtures/httpOptions/handlers',
+				port: 8899
+			})
+
+			setTimeout(function() {
+				app.findHttpMethods('/people/cooll').should.eql("OPTIONS");
+				done();
+			}, 1000);
+		});
+	});
 })
