@@ -1,6 +1,7 @@
-var should = require('should'); //for mocha tests
-var Vatican = require("../lib/vatican")
-var _ = require('lodash');
+const should = require('should'); //for mocha tests
+const Vatican = require("../lib/vatican")
+const _ = require('lodash');
+const OptionsResponse = require("../lib/optionsresponse")
 
 
 describe("Vatican methods", function() {
@@ -59,6 +60,11 @@ describe("Vatican methods", function() {
 			matchFound.action.should.equal("killPeep")
 			matchFound.handlerName.should.equal('People')
 			done()
+		})
+
+		it("should return an OptionsResponse with the list of accaptable methods for a URL when method = OPTIONS", () => {
+			let ret = vatican.findMethod("/people", 'OPTIONS')
+			should(ret).be.instanceOf(OptionsResponse);	
 		})
 	})
 
