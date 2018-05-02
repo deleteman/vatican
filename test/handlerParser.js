@@ -19,6 +19,17 @@ describe("handlerParser.parse method", function() {
                 done();
             })
         })
+         it("should correctly parse version information on all endpoints", (done) =>  {
+            let dirname = dir + "/es6-basic";
+            parse(dirname, (err, paths) => {
+                if(err) return done(err);
+                paths[0].versions.sort().should.be.eql(["1.1.2"].sort());
+                paths[1].versions.sort().should.be.eql(["1.0"].sort());
+                paths[2].versions.sort().should.be.eql(["1.1.2", "1.0"].sort());
+                paths[3].versions.length.should.be.equal(0);
+                done();
+            })
+        })
         it("should support all basic methods methods without names", (done) =>  {
             let dirname = dir + "/es6-no-names";
             parse(dirname, (err, paths) => {

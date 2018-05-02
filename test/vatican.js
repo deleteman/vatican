@@ -66,6 +66,13 @@ describe("Vatican methods", function() {
 			let ret = vatican.findMethod("/people", 'OPTIONS')
 			should(ret).be.instanceOf(OptionsResponse);	
 		})
+
+		it("should find the right endpoint based on the version provided in the URL")
+
+		it("should find the right endpoint based on the version provided in the ACCEPT header")
+
+		it("should return the latest version of a URL if no version is provided")
+
 	})
 
 	describe("@getCorrectModel", function() {
