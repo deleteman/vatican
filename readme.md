@@ -74,7 +74,8 @@ $ npm test
 
 ## v 1.5.0
 + Added support for OPTIONS methods
-+ 
++ Added endpoint versioning support
++ Added on-ready event, to avoid code referencing handler that haven't been parsed yet.
 
 ## v 1.4.0
 + Added support for ES6 classes as resource handlers
