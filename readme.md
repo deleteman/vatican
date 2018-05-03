@@ -24,11 +24,14 @@ Will enable default versioning behavior, which means it'll use the major version
 new Vatican({
 	versioning: {
 		strategy: "url",
-		format: (fullVersion) => fullVersion.split(".")[0]
+		matching: (urlV, endpointV) {
+			let v = urlV.substring(1);
+			return +v == +endpointV.split(".")[0];
+		}
 	}
 	})
 ```
-Using the strategy property, you can set a custom version formatter for your URLs. In the above example, it'll create URLs as /1/your/api
+Using the strategy property, you can set a custom version matcher for your URLs. In the above example, it'll match URLs as /1/your/api
 
 You can also tell Vatican to use header versioning instead of modifying your URLs
 
@@ -42,11 +45,17 @@ new Vatican({
 The header used will be the "Accept" header, with the following format:
 
 accept/vnd.vatican-version.[version number]+json
-
-
 ### Specifying your endpoint's version compatibility
 
 @endpoint (url: /books method:post versions:[1.2, 1.3, 1.4])
+
+
+
+### Matching function
+
+This function is optional, if you don't provide a _matching_ function, urls will contain the full version number you define for your endpoint (i.e /1.2.3/your/endpoint) and that number will be use to match it during the request.
+
+
 ## Installing Vatican
 
 ```bash

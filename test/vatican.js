@@ -15,14 +15,25 @@ describe("Vatican methods", function() {
 	describe("@checkOptions", function(){ 
 		it("should throw an error if no port is specified", function() {
 			(function() {
-				v = new Vatican({handlers: ''})
+				let v = new Vatican({handlers: ''})
 			}).should.throw("Port not specified")
 		})
 		it("should throw an error if no handlers folder is specified", function() {
 			(function() {
-				v = new Vatican({port: 123})
+				let v = new Vatican({port: 123})
 			}).should.throw("Handlers folder not specified")
 		})
+		it("should throw an error if you don't define a matching function when you define a custom version format",() => {
+			(() => {
+				let v = new Vatican({
+					handlers: '/no/matching/function',
+					port: 88,
+					versioning: {
+						format: () => { }
+					}
+				})
+			}).should.throw("Versioning error: matching function is needed when format function is provided")
+		});
 	})
 
 	describe("@preprocess", function() {
@@ -47,7 +58,7 @@ describe("Vatican methods", function() {
 
 	describe("@parseHandlers", function() {
 		it("should return a structure with the handlers data", function(done) {
-			vatican.parseHandlers(function(hdlrs) {
+			vatican.parseHandlers(function(err, hdlrs) {
 				hdlrs.length.should.equal(5)
 				done()
 			})
@@ -67,11 +78,63 @@ describe("Vatican methods", function() {
 			should(ret).be.instanceOf(OptionsResponse);	
 		})
 
-		it("should find the right endpoint based on the version provided in the URL")
+		it("should use the full version defined on the annotation if no matching function is defined", (done) => {
+			var localVatican = new Vatican({
+				handlers: __dirname + '/fixtures/handlerParser/es6-multi-version',
+				port: 88,
+				versioning: {
+					strategy: "url"
+				}
+			})
+			localVatican.on('READY', () => {
+				let method = localVatican.findMethod("/2.1.3/books", "GET")
+				method.handlerName.should.equal("BooksV2")
+				method.name.should.equal("my_list_of_books_2_1_3")
+				done();
+			})
+		})
 
-		it("should find the right endpoint based on the version provided in the ACCEPT header")
+		it("should find the right endpoint based on the version provided in the URL", (done) => {
+			var localVatican = new Vatican({
+				handlers: __dirname + '/fixtures/handlerParser/es6-multi-version',
+				port: 88,
+				versioning: {
+					strategy: "url",
+					matching: (urlVersion, endpointVersion) => {
+						let v = urlVersion.substring(1);
+						return +v == +endpointVersion.split(".")[0];
+					}
+				}
+			})
+			localVatican.on('READY', () => {
+				let method = localVatican.findMethod("/v2/books", "GET")
+				method.handlerName.should.equal("BooksV2")
+				done();
+			})
 
-		it("should return the latest version of a URL if no version is provided")
+		})
+
+
+		it("should find the right endpoint based on the version provided in the ACCEPT header", (done) => {
+			var localVatican = new Vatican({
+				handlers: __dirname + '/fixtures/handlerParser/es6-multi-version',
+				port: 88,
+				versioning: {
+					strategy: "header",
+					matching: (urlVersion, endpointVersion) => {
+						let v = urlVersion.substring(1);
+						return +v == +endpointVersion.split(".")[0];
+					}
+				}
+			})
+			localVatican.on('READY', () => {
+				let method = localVatican.findMethod("/books", "GET", {
+					"accept": "accept/vnd.vatican-version.v2+json"
+				})
+				method.handlerName.should.equal("BooksV2")
+				done();
+			})
+		})
 
 	})
 
