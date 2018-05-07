@@ -20,7 +20,7 @@ module.exports = class BooksV2 {
 		
 	}
 
-	@endpoint(url: /books method: post name: new_book versions: [2.1.2,2.0])
+	@endpoint(url: /books method: post name: new_book versions: [2.1.2,2.0,2.1.3])
 	create(req, res) {
 
 	}

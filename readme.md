@@ -68,7 +68,7 @@ $ npm test
 ```
 # More info
 
-+ Docs: https://www.fernandodoglio.com/vaticanjs-docs
++ Check out VaticanJS official documentation: https://www.fernandodoglio.com/vaticanjs-docs
 
 # Changelog
 
@@ -76,6 +76,10 @@ $ npm test
 + Added support for OPTIONS methods
 + Added endpoint versioning support
 + Added on-ready event, to avoid code referencing handler that haven't been parsed yet.
++ Added on-ready event for the database, this way, working with DB events and Vatican's events works the same way
++ Removed the need to start working with dbStart
++ Added SERVER-READY event, optional, if you want to be notified when the HTTP server is up and running
+
 
 ## v 1.4.0
 + Added support for ES6 classes as resource handlers
@@ -165,6 +169,7 @@ If you feel like helping out by bug-fixing, or contributing with a new feature o
 # Contact me
 
 If you have questions, or just want to send your love/hate, drop me an e-mail at: deleteman@gmail.com
+Or visit my official site at www.fernandodoglio.com
 
 # License
 

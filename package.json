@@ -26,11 +26,12 @@
     },
     "version": "1.4.0",
     "dependencies": {
-        "winston": "0.7.3",
-        "lodash": "2.4.1",
         "colors": "0.6.2",
+        "lodash": "2.4.1",
         "mongoose": "*",
-        "strip-json-comments": "1.0.1"
+        "sinon": "^5.0.6",
+        "strip-json-comments": "1.0.1",
+        "winston": "0.7.3"
     },
     "devDependencies": {
         "istanbul": "^0.4.5",

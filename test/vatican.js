@@ -2,6 +2,7 @@ const should = require('should'); //for mocha tests
 const Vatican = require("../lib/vatican")
 const _ = require('lodash');
 const OptionsResponse = require("../lib/optionsresponse")
+const sinon = require("sinon");
 
 
 describe("Vatican methods", function() {
@@ -11,6 +12,7 @@ describe("Vatican methods", function() {
 		port: 88
 	})
 	var matchFound = null
+
 
 	describe("@checkOptions", function(){ 
 		it("should throw an error if no port is specified", function() {
@@ -73,11 +75,26 @@ describe("Vatican methods", function() {
 			done()
 		})
 
-		it("should return an OptionsResponse with the list of accaptable methods for a URL when method = OPTIONS", () => {
+		it("should return an OptionsResponse with the list of acceptable methods for a URL when method = OPTIONS", () => {
 			let ret = vatican.findMethod("/people", 'OPTIONS')
 			should(ret).be.instanceOf(OptionsResponse);	
 		})
 
+		it("should return an OptionsResponse with the list of acceptable methods for a URL when method = OPTIONS taking into account the version provided", (done) => {
+			let localVatican = new Vatican({
+				handlers: __dirname + '/fixtures/handlerParser/es6-multi-version',
+				port: 88,
+				versioning: {
+					strategy: "url"
+				}
+			})
+			localVatican.on('READY', () => {
+				let res = localVatican.findMethod("/2.1.3/books", "OPTIONS")
+				should(res).be.instanceOf(OptionsResponse);
+				res.validMethods.split(",").sort().should.eql(['GET', 'POST'].sort());
+				done();
+			})
+		})
 		it("should use the full version defined on the annotation if no matching function is defined", (done) => {
 			var localVatican = new Vatican({
 				handlers: __dirname + '/fixtures/handlerParser/es6-multi-version',
@@ -147,10 +164,13 @@ describe("Vatican methods", function() {
 		it("should return the correct model if there is one", function(done) {
 			var fakeVat = vatican
 			fakeVat.__dbStart = function() {
+				let self = this;
 				return {
 					on: function() {},
 					error: function () {},
 					once: function(str, cb) {
+						console.log("once called with: ", str)
+						self.eventEmitter.emit('DB-READY')
 						cb()
 					}
 				}
@@ -180,6 +200,7 @@ describe("Vatican methods", function() {
 				port: 8888
 			})
 
+			sinon.stub(app, 'dbStart');
 			app.start();
 
 			( app.server._handle != null ).should.be.true;
@@ -187,6 +208,7 @@ describe("Vatican methods", function() {
 			app.close();
 
 			( app.server._handle == null ).should.be.true;
+			app.dbStart.restore();
 		});
 
 		it('should call callback on close', function( done ) {
@@ -195,8 +217,10 @@ describe("Vatican methods", function() {
 				port: 8888
 			})
 
+			sinon.stub(app, 'dbStart');
 			app.start();
 			app.close(function() {
+				app.dbStart.restore();
 				done();
 			});
 		});
