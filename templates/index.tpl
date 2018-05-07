@@ -8,9 +8,7 @@ app.on('READY', (err, paths) => {
 	//your code goes here...
 })
 
-app.dbStart(function() {
-	console.log("Db connection stablished...")
-
-	//Start the server
-	app.start()
+app.start(function() {
+	console.log("VaticanJS is up and running...")
+	
 } )
