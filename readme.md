@@ -8,54 +8,6 @@ One of the key features of Vatican is the use of annotations on methods to defin
 For a full code example of an app using Vatican, check out this repo: https://github.com/deleteman/vatican-example
 
 
-## Versioning your API
-By default, there is no versioning available.
-On the constructor, you can set the versioning strategy.
-
-```js
-new Vatican({
-	versioning: true
-	})
-```
-Will enable default versioning behavior, which means it'll use the major version of each endpoint as part of the URL prefixed by a "v", i.e: /v1/your/endpoint
-
-
-```js
-new Vatican({
-	versioning: {
-		strategy: "url",
-		matching: (urlV, endpointV) {
-			let v = urlV.substring(1);
-			return +v == +endpointV.split(".")[0];
-		}
-	}
-	})
-```
-Using the strategy property, you can set a custom version matcher for your URLs. In the above example, it'll match URLs as /1/your/api
-
-You can also tell Vatican to use header versioning instead of modifying your URLs
-
-```js
-new Vatican({
-	versioning: {
-		strategy: "header"
-	}
-	})
-```
-The header used will be the "Accept" header, with the following format:
-
-accept/vnd.vatican-version.[version number]+json
-### Specifying your endpoint's version compatibility
-
-@endpoint (url: /books method:post versions:[1.2, 1.3, 1.4])
-
-
-
-### Matching function
-
-This function is optional, if you don't provide a _matching_ function, urls will contain the full version number you define for your endpoint (i.e /1.2.3/your/endpoint) and that number will be use to match it during the request.
-
-
 ## Installing Vatican
 
 ```bash
