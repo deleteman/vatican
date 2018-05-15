@@ -24,7 +24,7 @@
     "bin": {
         "vatican": "./bin/vatican"
     },
-    "version": "1.4.0",
+    "version": "1.5.0",
     "dependencies": {
         "colors": "0.6.2",
         "lodash": "2.4.1",
